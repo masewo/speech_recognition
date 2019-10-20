@@ -33,7 +33,7 @@ class SpeechRecognitionPlugin private constructor(private val context: Context, 
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
     }
 
-    fun onMethodCall(call: MethodCall, result: Result) {
+    override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
             "speech.activate" -> {
                 // FIXME => Dummy activation verification : we assume that speech recognition permission
@@ -137,6 +137,7 @@ class SpeechRecognitionPlugin private constructor(private val context: Context, 
         /**
          * Plugin registration.
          */
+        @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "speech_recognition")
             channel.setMethodCallHandler(SpeechRecognitionPlugin(registrar.activeContext(), channel))
